@@ -2,14 +2,22 @@ server:
   port: 8080
   shutdown: graceful
 
+logging:
+  level:
+    com.ll.rsv: INFO
+    org.hibernate.SQL: INFO
+    org.hibernate.orm.jdbc.bind: INFO
+    org.hibernate.orm.jdbc.extract: INFO
+    org.springframework.security: DEBUG
+    org.springframework.transaction.interceptor: INFO
+
 spring:
   profiles:
-    active: dev
-    include: secret
+    active: secret
   datasource:
     url: jdbc:mysql://localhost:3306/mydb
     username: root
-    password: ${custom.prod.database.password}
+    password: 2483
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -38,19 +46,3 @@ spring:
           connectiontimeout: 5000
           timeout: 5000
           writetimeout: 5000
-
-app:
-  password-reset:
-    base-url: https://localhost:8080
-
-jwt:
-  access-token-validity-ms: 3600000      # 액세스토큰 1시간
-  refresh-token-validity-ms: 86400000    # 리프레시토큰 24시간
-
-logging:
-  level:
-    com.ll.rsv: INFO
-    org.hibernate.SQL: INFO
-    org.hibernate.orm.jdbc.bind: INFO
-    org.hibernate.orm.jdbc.extract: INFO
-    org.springframework.transaction.interceptor: INFO

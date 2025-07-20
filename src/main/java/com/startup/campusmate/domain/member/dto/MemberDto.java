@@ -1,4 +1,4 @@
-package com.startup.campusmate.domain.member.dto.auth.member;
+package com.startup.campusmate.domain.member.dto;
 
 import lombok.Builder;
 import lombok.Getter;
