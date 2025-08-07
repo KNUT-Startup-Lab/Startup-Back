@@ -1,6 +1,11 @@
 package com.startup.campusmate.domain.member.auth.controller;
 
+<<<<<<< HEAD
 import com.startup.campusmate.domain.member.auth.dto.recovery.FindEmailRq;
+=======
+import com.startup.campusmate.domain.member.auth.dto.VerifyPhone;
+import com.startup.campusmate.domain.member.auth.dto.recovery.FindIdRq;
+>>>>>>> 8540322 (feat: 본인인증 서비스 로직 추가)
 import com.startup.campusmate.domain.member.auth.dto.recovery.FindPasswordRq;
 import com.startup.campusmate.domain.member.auth.dto.session.LoginRq;
 import com.startup.campusmate.domain.member.auth.dto.session.LoginRs;
@@ -11,6 +16,7 @@ import com.startup.campusmate.standard.base.Empty;
 import com.startup.campusmate.standard.util.Ut;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,11 +69,26 @@ public class AuthController {
         }
     }
 
-//    @PostMapping("/verify-phone")
-//    public ResponseEntity<RsData<Boolean>> verifyPhone(@RequestBody VerifyPhone verifyPhone) {
-//        // 휴대폰 인증하는 코드
-//        return RsData.of("인증성공", isVerified);
-//    }
+    @PostMapping("/verify-phone")
+    public ResponseEntity<RsData<Boolean>> verifyPhone(@RequestBody VerifyPhone verifyPhone) {
+        boolean isVerified = authService.verifyCode(
+                verifyPhone.getVerificationCode(),
+                verifyPhone.getPhoneNum()
+        );
+
+        if (isVerified) {
+            return ResponseEntity.ok(RsData.of("S-200", "인증 성공", true));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(RsData.of("F-400", "인증 실패", false));
+        }
+    }
+
+    @PostMapping("/send-verification-code")
+    public ResponseEntity<RsData<Void>> sendCode(String phoneNum) {
+        authService.sendVerificationCode(phoneNum);
+        return ResponseEntity.ok(RsData.of("S-200", "인증번호 전송 성공"));
+    }
 
 }
 
