@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class FindIdRq {
+public class FindEmailRq {
     private String nickname;
     private String phoneNum;
 }
