@@ -13,15 +13,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequiredArgsConstructor
 public class AuthMessageService {
 
-    @Value("${custom.naver-sens.service-id}")
-    private String serviceId;
-    @Value("${custom.naver-sens.access-key}")
-    private String accessKey;
-    @Value("${custom.naver-sens.secret-key}")
-    private String secretKey;
-    @Value("${custom.naver-sens.sender-phone}")
-    private String senderPhone;
-    private final WebClient webClient;
+//    @Value("${custom.naver-sens.service-id}")
+//    private String serviceId;
+//    @Value("${custom.naver-sens.access-key}")
+//    private String accessKey;
+//    @Value("${custom.naver-sens.secret-key}")
+//    private String secretKey;
+//    @Value("${custom.naver-sens.sender-phone}")
+//    private String senderPhone;
     private final JavaMailSender mailSender;
 
     public void sendEmail(String toEmail, String resetUrl) throws MessagingException {

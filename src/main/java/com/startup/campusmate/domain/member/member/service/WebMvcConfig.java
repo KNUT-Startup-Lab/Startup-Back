@@ -8,12 +8,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    @Value("${file.image-upload-dir}")
+    @Value("${custom.file.image-upload-dir}")
     private String uploadDir;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/gen/**")
-                .addResourceLocations("file:///" + uploadDir);
+                // "file:///" 대신 "file:"을 사용합니다.
+                .addResourceLocations("file:" + uploadDir);
     }
 }

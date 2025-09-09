@@ -27,7 +27,7 @@ public class AuthService {
     private final BlackListRepository blackListRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
-    private final AuthMessageService authMessageService;
+//    private final AuthMessageService authMessageService;
     private final RedisTemplate<String, String> redisTemplate;
 
     @Value("${custom.app.backend.base-url}")
@@ -72,19 +72,19 @@ public class AuthService {
 
     @Transactional
     public void sendResetLink(String email) throws MessagingException {
-        Member member = memberRepository.findByUsername(email)
-                .orElseThrow(() -> new GlobalException("등록된 이메일이 아닙니다."));
-
-        String refreshToken = jwtTokenProvider.createRefreshToken(email, member.getId(), member.getAuthorities());
-        Date expiredDate = jwtTokenProvider.getRefreshTokenExpiryDate();
-//        String tokenHash = DigestUtils.sha256Hex(refreshToken);
-
-        member.setRefreshToken(refreshToken);
-        memberRepository.save(member);
-
-        // 2) 메일 전송
-        String resetUrl = baseUrl + "/reset-password?token=" + refreshToken;
-        authMessageService.sendEmail(email, resetUrl);
+//        Member member = memberRepository.findByUsername(email)
+//                .orElseThrow(() -> new GlobalException("등록된 이메일이 아닙니다."));
+//
+//        String refreshToken = jwtTokenProvider.createRefreshToken(email, member.getId(), member.getAuthorities());
+//        Date expiredDate = jwtTokenProvider.getRefreshTokenExpiryDate();
+////        String tokenHash = DigestUtils.sha256Hex(refreshToken);
+//
+//        member.setRefreshToken(refreshToken);
+//        memberRepository.save(member);
+//
+//        // 2) 메일 전송
+//        String resetUrl = baseUrl + "/reset-password?token=" + refreshToken;
+//        authMessageService.sendEmail(email, resetUrl);
     }
 
     public String findMemberUsername(String nickname, String phoneNum) {
@@ -100,9 +100,9 @@ public class AuthService {
     }
 
     public void sendVerificationCode(String phoneNum) {
-        String code = String.format("%06d", new Random().nextInt(999999));
-        String key = "verify:" + phoneNum;
-        redisTemplate.opsForValue().set(key, code, Duration.ofMinutes(5));
-        authMessageService.sendSMS(phoneNum, "인증번호는 " + code + "입니다.");
+//        String code = String.format("%06d", new Random().nextInt(999999));
+//        String key = "verify:" + phoneNum;
+//        redisTemplate.opsForValue().set(key, code, Duration.ofMinutes(5));
+//        authMessageService.sendSMS(phoneNum, "인증번호는 " + code + "입니다.");
     }
 }
