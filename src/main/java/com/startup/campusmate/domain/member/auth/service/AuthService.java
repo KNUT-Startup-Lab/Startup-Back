@@ -93,15 +93,6 @@ public class AuthService {
                 .orElseThrow(() -> new GlobalException("핸드폰 번호 불일치"));
     }
 
-    """
-    [1] 프론트 → 전화번호 보냄
-    [2] 백엔드 → 랜덤 인증번호 생성, Redis 저장
-    [3] 백엔드 → smsService로 인증번호 문자 전송 (★★★ 핵심)
-    [4] 사용자 → 문자 수신 후 입력
-    [5] 프론트 → 전화번호 + 코드 전송
-    [6] 백엔드 → Redis 비교 후 검증 성공 여부 반환
-    """
-
     public boolean verifyCode(String phoneNumber, String code) {
         String key = "verify:" + phoneNumber;
         String storedCode = redisTemplate.opsForValue().get(key);

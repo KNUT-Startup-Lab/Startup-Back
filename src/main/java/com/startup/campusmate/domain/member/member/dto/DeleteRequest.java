@@ -1,4 +1,4 @@
 package com.startup.campusmate.domain.member.member.dto;
 
-public class DeleteRequest {
+public record DeleteRequest(String password) {
 }
