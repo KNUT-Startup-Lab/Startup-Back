@@ -1,11 +1,7 @@
 package com.startup.campusmate.domain.member.auth.controller;
 
-<<<<<<< HEAD
-import com.startup.campusmate.domain.member.auth.dto.recovery.FindEmailRq;
-=======
 import com.startup.campusmate.domain.member.auth.dto.VerifyPhone;
-import com.startup.campusmate.domain.member.auth.dto.recovery.FindIdRq;
->>>>>>> 8540322 (feat: 본인인증 서비스 로직 추가)
+import com.startup.campusmate.domain.member.auth.dto.recovery.FindEmailRq;
 import com.startup.campusmate.domain.member.auth.dto.recovery.FindPasswordRq;
 import com.startup.campusmate.domain.member.auth.dto.session.LoginRq;
 import com.startup.campusmate.domain.member.auth.dto.session.LoginRs;
@@ -42,7 +38,7 @@ public class AuthController {
         return ResponseEntity.ok(RsData.of("로그아웃 성공"));
     }
 
-    @PostMapping("/find-id")
+    @PostMapping("/find-email")
     public ResponseEntity<RsData<String>> findMemberUsername(@RequestBody FindEmailRq findEmailRq) {
         // 저장소에서 해당 이메일 찾기
         String email = authService.findMemberUsername(findEmailRq.getNickname(), findEmailRq.getPhoneNum());
