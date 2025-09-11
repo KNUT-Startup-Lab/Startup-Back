@@ -37,7 +37,6 @@ out/
 .vscode/
 
 src/main/resources/application-secret.yml
-src/main/resources/application.yml
 
 meal_menu_api_spec.md
 notice_board_api_spec.md

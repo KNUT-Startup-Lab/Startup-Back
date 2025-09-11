@@ -32,10 +32,10 @@ spring:
     serialization:
       fail-on-empty-beans: false
   mail:
-    host: smtp.example.com
+    host: smtp.naver.com
     port: 587
-    username: your-username
-    password: your-password
+    username: kth4778
+    password: HP7YNDT39LKS
     default-encoding: UTF-8
     protocol: smtp
     properties:
@@ -47,3 +47,9 @@ spring:
           connectiontimeout: 5000
           timeout: 5000
           writetimeout: 5000
+custom:
+  app:
+    backend:
+      base-url: http://localhost:8080
+  file:
+    image-upload-dir: C:/uploads/images
