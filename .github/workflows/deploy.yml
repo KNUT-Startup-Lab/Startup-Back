@@ -58,9 +58,10 @@ jobs:
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         script: |
           cd /home/ubuntu
-          export JAR_NAME=$(ls *.jar | head -n 1)
+          # 'plain'이 아닌 실행가능한 jar 파일명을 찾습니다.
+          export JAR_NAME=$(ls *.jar | grep -v 'plain' | head -n 1)
           echo "Deploying $JAR_NAME"
           # 8080 포트를 사용하고 있는 기존 프로세스를 종료합니다.
           sudo fuser -k 8080/tcp || true
-          # 새로운 JAR 파일을 백그라운드에서 실행하고 로그를 app.log에 저장합니다.
-          nohup java -jar $JAR_NAME > app.log 2>&1 &
+          # 공백이 포함된 파일명을 올바르게 처리하기 위해 변수명에 큰따옴표를 사용합니다.
+          nohup java -jar "$JAR_NAME" > app.log 2>&1 &
