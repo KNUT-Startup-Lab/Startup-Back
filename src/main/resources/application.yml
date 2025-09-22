@@ -50,6 +50,6 @@ spring:
 custom:
   app:
     backend:
-      base-url: http://localhost:8080
+      base-url: http://campusmate.duckdns.org:8080/
   file:
     image-upload-dir: C:/uploads/images
