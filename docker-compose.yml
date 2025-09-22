@@ -4,8 +4,7 @@ services:
   app:
     container_name: my-spring-app
     build: .
-    ports:
-      - "8080:8080"
+    network_mode: "host"
     depends_on:
       - redis
     env_file:
