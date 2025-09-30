@@ -43,8 +43,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: Your-Application-Name # 1단계에서 생성한 애플리케이션 이름
-          environment_name: Your-Environment-Name # 1단계에서 생성한 환경 이름
+          application_name: startup # 1단계에서 생성한 애플리케이션 이름
+          environment_name: startup-env # 1단계에서 생성한 환경 이름
           version_label: ${{ github.sha }}
           region: us-east-1 # 본인의 AWS 리전에 맞게 수정
           deployment_package: deploy.zip
