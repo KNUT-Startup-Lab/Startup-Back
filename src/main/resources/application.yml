@@ -15,11 +15,7 @@ logging:
 spring:
   profiles:
     active: secret
-  datasource:
-    url: jdbc:mysql://startup.cghwsiqsyv9d.us-east-1.rds.amazonaws.com:3306/mydb?serverTimezone=Asia/Seoul&useSSL=false
-    username: root
-    password: 11111111
-    driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
@@ -29,9 +25,11 @@ spring:
         format_sql: false
         highlight_sql: false
         use_sql_comments: false
+
   jackson:
     serialization:
       fail-on-empty-beans: false
+
   mail:
     host: smtp.naver.com
     port: 587
@@ -48,9 +46,3 @@ spring:
           connectiontimeout: 5000
           timeout: 5000
           writetimeout: 5000
-custom:
-  app:
-    backend:
-      base-url: http://campusmate.duckdns.org:8080/
-  file:
-    image-upload-dir: C:/uploads/images

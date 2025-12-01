@@ -34,7 +34,7 @@ public class SecurityConfig {
                                     .permitAll()
                                     .requestMatchers("/api/auth/login")
                                     .permitAll()
-                                    .requestMatchers("/api/users")
+                                    .requestMatchers("/api/member")
                                     .permitAll()
                                     .requestMatchers("/oauth2/**")
                                     .permitAll()

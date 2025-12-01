@@ -28,6 +28,7 @@ public class Member extends BaseTime {
     private String college;
     private String phoneNum;
     private String profileImageUrl;
+    @Column(length = 512)
     private String refreshToken;
     private Boolean _isAdmin;
 
