@@ -17,7 +17,7 @@ public interface ResidentRepository extends JpaRepository<Resident, Long> {
     boolean existsByRoomNumberAndResidentIdNot(String roomNumber, String residentId);
     boolean existsByStudentId(String studentId);
     Optional<Resident> findByResidentId(String residentId);
-
+    boolean existsByResidentId(String residentId);
     // 검색 및 필터링을 위한 커스텀 쿼리
     @Query("SELECT r FROM Resident r WHERE " +
             "(:search IS NULL OR " +

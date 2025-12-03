@@ -1,7 +1,11 @@
 package com.startup.campusmate.domain.resident.service;
 
+import com.startup.campusmate.domain.point.dto.*;
 import com.startup.campusmate.domain.resident.dto.*;
+import com.startup.campusmate.domain.point.entity.Point;
+import com.startup.campusmate.domain.point.entity.PointType;
 import com.startup.campusmate.domain.resident.entity.Resident;
+import com.startup.campusmate.domain.point.repository.PointRepository;
 import com.startup.campusmate.domain.resident.repository.ResidentRepository;
 import com.startup.campusmate.global.exceptions.DuplicateRoomException;
 import com.startup.campusmate.global.exceptions.DuplicateStudentException;
