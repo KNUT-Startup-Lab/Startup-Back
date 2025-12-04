@@ -32,6 +32,9 @@ public class Member extends BaseTime {
     private String refreshToken;
     private Boolean _isAdmin;
 
+    @Builder.Default
+    private Integer floor = 2;
+
     @Transient
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getAuthoritiesAsStringList()

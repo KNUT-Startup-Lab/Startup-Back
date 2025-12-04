@@ -1,6 +1,5 @@
 package com.startup.campusmate.domain.resident.resident.controller;
 
-import com.startup.campusmate.domain.resident.dto.*;
 import com.startup.campusmate.domain.resident.resident.dto.*;
 import com.startup.campusmate.domain.resident.resident.service.ResidentService;
 import com.startup.campusmate.global.exceptions.DuplicateRoomException;

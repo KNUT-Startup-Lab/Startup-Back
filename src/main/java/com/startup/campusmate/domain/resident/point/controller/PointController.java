@@ -1,8 +1,6 @@
 package com.startup.campusmate.domain.resident.point.controller;
 
-import com.startup.campusmate.domain.point.dto.*;
 import com.startup.campusmate.domain.resident.point.dto.*;
-import com.startup.campusmate.domain.resident.resident.point.dto.*;
 import com.startup.campusmate.domain.resident.point.service.PointService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
