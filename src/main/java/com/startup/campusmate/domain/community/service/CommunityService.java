@@ -11,6 +11,7 @@ import com.startup.campusmate.domain.community.repository.PostLikeRepository;
 import com.startup.campusmate.domain.community.repository.PostRepository;
 import com.startup.campusmate.domain.member.member.entity.Member;
 import com.startup.campusmate.domain.member.member.repository.MemberRepository;
+import com.startup.campusmate.domain.push.service.NotificationService;
 import com.startup.campusmate.global.exceptions.GlobalException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,6 +33,7 @@ public class CommunityService {
     private final CommentRepository commentRepository;
     private final CommunityNoticeRepository communityNoticeRepository;
     private final MemberRepository memberRepository;
+    private final NotificationService notificationService;
 
     public PostListRs getPostList(Long userId, Integer floor, int page, int limit) {
         Pageable pageable = PageRequest.of(page - 1, limit);
@@ -129,6 +131,16 @@ public class CommunityService {
                     .build();
             postLikeRepository.save(like);
             post.incrementLikes();
+
+            // 본인 게시글이 아닌 경우에만 알림 전송
+            if (!post.isOwnedBy(userId)) {
+                notificationService.notifyUser(
+                        post.getUser().getId(),
+                        "커뮤니티",
+                        "내 게시글에 좋아요가 달렸습니다."
+                );
+            }
+
             return LikeRs.of(true, post.getLikes());
         }
     }
@@ -148,6 +160,16 @@ public class CommunityService {
                 .build();
 
         commentRepository.save(comment);
+
+        // 본인 게시글이 아닌 경우에만 알림 전송
+        if (!post.isOwnedBy(userId)) {
+            notificationService.notifyUser(
+                    post.getUser().getId(),
+                    "커뮤니티",
+                    "내 게시글에 댓글이 달렸습니다."
+            );
+        }
+
         return comment.getId();
     }
 
@@ -198,6 +220,14 @@ public class CommunityService {
                 .build();
 
         communityNoticeRepository.save(notice);
+
+        // 해당 층(또는 전체) 사용자에게 푸시 알림 전송
+        notificationService.notifyFloorOrAll(
+                request.getFloor(),
+                "커뮤니티 공지",
+                notice.getTitle()
+        );
+
         return notice.getId();
     }
 }

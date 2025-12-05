@@ -1,5 +1,7 @@
 package com.startup.campusmate.domain.resident.point.service;
 
+import com.startup.campusmate.domain.member.member.repository.MemberRepository;
+import com.startup.campusmate.domain.push.service.NotificationService;
 import com.startup.campusmate.domain.resident.point.dto.*;
 import com.startup.campusmate.domain.resident.point.entity.Point;
 import com.startup.campusmate.domain.resident.point.entity.PointType;
@@ -7,6 +9,7 @@ import com.startup.campusmate.domain.resident.point.repository.PointRepository;
 import com.startup.campusmate.domain.resident.resident.entity.Resident;
 import com.startup.campusmate.domain.resident.resident.repository.ResidentRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,15 +26,13 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @Slf4j
+@RequiredArgsConstructor
 public class PointService {
 
     private final PointRepository pointRepository;
     private final ResidentRepository residentRepository;
-
-    public PointService(PointRepository pointRepository, ResidentRepository residentRepository) {
-        this.pointRepository = pointRepository;
-        this.residentRepository = residentRepository;
-    }
+    private final MemberRepository memberRepository;
+    private final NotificationService notificationService;
 
     // 상벌점 부여
     public PointDetailResponse createPoint(PointCreateRequest request) {
@@ -64,6 +65,17 @@ public class PointService {
 
         log.info("상벌점 부여 완료: pointId={}, residentName={}, type={}, points={}",
                 savedPoint.getPointId(), resident.getName(), pointType, request.getPoints());
+
+        // 해당 입주자(학번)에 연결된 회원에게 푸시 알림 전송
+        memberRepository.findByStudentNum(resident.getStudentId())
+                .ifPresent(member -> {
+                    String title = pointType == PointType.MERIT ? "상점 부여" : "벌점 부여";
+                    String message = String.format("%s %d점이 부여되었습니다. 사유: %s",
+                            pointType == PointType.MERIT ? "상점" : "벌점",
+                            request.getPoints(),
+                            request.getReason());
+                    notificationService.notifyUser(member.getId(), title, message);
+                });
 
         return new PointDetailResponse(new PointDto(savedPoint), "상벌점 부여 성공");
     }

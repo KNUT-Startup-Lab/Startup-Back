@@ -2,6 +2,7 @@ package com.startup.campusmate.domain.qna.service;
 
 import com.startup.campusmate.domain.member.member.entity.Member;
 import com.startup.campusmate.domain.member.member.repository.MemberRepository;
+import com.startup.campusmate.domain.push.service.NotificationService;
 import com.startup.campusmate.domain.qna.dto.*;
 import com.startup.campusmate.domain.qna.entity.Qna;
 import com.startup.campusmate.domain.qna.entity.QnaCategory;
@@ -35,6 +36,7 @@ public class QnaService {
     private final QnaRepository qnaRepository;
     private final QnaImageRepository qnaImageRepository;
     private final MemberRepository memberRepository;
+    private final NotificationService notificationService;
 
     @Value("${custom.file.upload-dir:/uploads/qna/}")
     private String uploadDir;
@@ -163,6 +165,14 @@ public class QnaService {
         }
 
         qna.addAnswer(request.getAnswer(), admin);
+
+        // 질문 작성자에게 푸시 알림 전송
+        notificationService.notifyWithData(
+                qna.getUser().getId(),
+                "Q&A 답변 등록",
+                "\"" + qna.getTitle() + "\" 질문에 답변이 등록되었습니다.",
+                "qna"
+        );
     }
 
     @Transactional
