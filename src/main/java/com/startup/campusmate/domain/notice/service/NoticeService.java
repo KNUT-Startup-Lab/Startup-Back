@@ -8,6 +8,7 @@ import com.startup.campusmate.domain.notice.entity.Notice;
 import com.startup.campusmate.domain.notice.entity.NoticeCategory;
 import com.startup.campusmate.domain.notice.repository.AttachmentRepository;
 import com.startup.campusmate.domain.notice.repository.NoticeRepository;
+import com.startup.campusmate.domain.push.service.NotificationService;
 import com.startup.campusmate.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +37,7 @@ public class NoticeService {
     private final NoticeRepository noticeRepository;
     private final AttachmentRepository attachmentRepository;
     private final MemberRepository memberRepository;
+    private final NotificationService notificationService;
 
     @Value("${custom.file.upload-dir}")
     private String uploadDir;
@@ -169,6 +171,12 @@ public class NoticeService {
             }
         }
 
+        // 전체 사용자에게 푸시 알림 전송
+        notificationService.notifyAll(
+                "새 공지사항",
+                notice.getTitle()
+        );
+
         return RsData.of("201-S1", "공지사항 생성 성공", notice.getId());
     }
 
@@ -187,6 +195,12 @@ public class NoticeService {
                 .build();
 
         noticeRepository.save(notice);
+
+        // 전체 사용자에게 푸시 알림 전송
+        notificationService.notifyAll(
+                "새 공지사항",
+                title
+        );
 
         return RsData.of("201-S1", "크롤링 공지사항 저장 성공", notice.getId());
     }
