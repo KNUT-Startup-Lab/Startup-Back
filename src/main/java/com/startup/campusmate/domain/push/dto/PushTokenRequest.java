@@ -2,9 +2,15 @@ package com.startup.campusmate.domain.push.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 public class PushTokenRequest {
 
+    // Setters
+    // Getters
     @NotNull
     private Long userId;
 
@@ -19,21 +25,4 @@ public class PushTokenRequest {
         this.expoPushToken = expoPushToken;
     }
 
-    // Getters
-    public Long getUserId() {
-        return userId;
-    }
-
-    public String getExpoPushToken() {
-        return expoPushToken;
-    }
-
-    // Setters
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public void setExpoPushToken(String expoPushToken) {
-        this.expoPushToken = expoPushToken;
-    }
 }

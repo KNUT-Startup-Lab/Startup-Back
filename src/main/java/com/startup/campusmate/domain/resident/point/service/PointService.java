@@ -1,8 +1,6 @@
 package com.startup.campusmate.domain.resident.point.service;
 
-import com.startup.campusmate.domain.point.dto.*;
 import com.startup.campusmate.domain.resident.point.dto.*;
-import com.startup.campusmate.domain.resident.resident.point.dto.*;
 import com.startup.campusmate.domain.resident.point.entity.Point;
 import com.startup.campusmate.domain.resident.point.entity.PointType;
 import com.startup.campusmate.domain.resident.point.repository.PointRepository;
