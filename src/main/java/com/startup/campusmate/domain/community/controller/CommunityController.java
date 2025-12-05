@@ -6,7 +6,7 @@ import com.startup.campusmate.domain.member.member.entity.Member;
 import com.startup.campusmate.domain.member.member.repository.MemberRepository;
 import com.startup.campusmate.global.exceptions.GlobalException;
 import com.startup.campusmate.global.rsData.RsData;
-import com.startup.campusmate.global.security.SecurityUser;
+import com.startup.campusmate.global.security.CustomUserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class CommunityController {
 
     @GetMapping("/posts")
     public RsData<PostListRs> getPostList(
-            @AuthenticationPrincipal SecurityUser user,
+            @AuthenticationPrincipal CustomUserDetails user,
             @RequestParam(required = false) Integer floor,
             @RequestParam(required = false, defaultValue = "1") int page,
             @RequestParam(required = false, defaultValue = "20") int limit
@@ -35,7 +35,7 @@ public class CommunityController {
 
     @GetMapping("/posts/{id}")
     public RsData<PostDetailRs> getPostDetail(
-            @AuthenticationPrincipal SecurityUser user,
+            @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable Long id
     ) {
         PostDetailRs result = communityService.getPostDetail(id, user.getId());
@@ -45,7 +45,7 @@ public class CommunityController {
     @PostMapping("/posts")
     @ResponseStatus(HttpStatus.CREATED)
     public RsData<Long> createPost(
-            @AuthenticationPrincipal SecurityUser user,
+            @AuthenticationPrincipal CustomUserDetails user,
             @Valid @RequestBody PostCreateRq request
     ) {
         Long postId = communityService.createPost(user.getId(), request);
@@ -54,7 +54,7 @@ public class CommunityController {
 
     @PutMapping("/posts/{id}")
     public RsData<String> updatePost(
-            @AuthenticationPrincipal SecurityUser user,
+            @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable Long id,
             @Valid @RequestBody PostUpdateRq request
     ) {
@@ -64,7 +64,7 @@ public class CommunityController {
 
     @DeleteMapping("/posts/{id}")
     public RsData<String> deletePost(
-            @AuthenticationPrincipal SecurityUser user,
+            @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable Long id
     ) {
         communityService.deletePost(id, user.getId());
@@ -73,7 +73,7 @@ public class CommunityController {
 
     @PostMapping("/posts/{id}/like")
     public RsData<LikeRs> toggleLike(
-            @AuthenticationPrincipal SecurityUser user,
+            @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable Long id
     ) {
         LikeRs result = communityService.toggleLike(id, user.getId());
@@ -83,7 +83,7 @@ public class CommunityController {
     @PostMapping("/posts/{id}/comments")
     @ResponseStatus(HttpStatus.CREATED)
     public RsData<Long> createComment(
-            @AuthenticationPrincipal SecurityUser user,
+            @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable Long id,
             @Valid @RequestBody CommentCreateRq request
     ) {
@@ -93,7 +93,7 @@ public class CommunityController {
 
     @DeleteMapping("/comments/{id}")
     public RsData<String> deleteComment(
-            @AuthenticationPrincipal SecurityUser user,
+            @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable Long id
     ) {
         communityService.deleteComment(id, user.getId());
@@ -102,7 +102,7 @@ public class CommunityController {
 
     @GetMapping("/notices")
     public RsData<NoticeListRs> getNoticeList(
-            @AuthenticationPrincipal SecurityUser user,
+            @AuthenticationPrincipal CustomUserDetails user,
             @RequestParam(required = false) Integer floor,
             @RequestParam(required = false, defaultValue = "5") int limit
     ) {
@@ -120,7 +120,7 @@ public class CommunityController {
     @PostMapping("/notices")
     @ResponseStatus(HttpStatus.CREATED)
     public RsData<Long> createNotice(
-            @AuthenticationPrincipal SecurityUser user,
+            @AuthenticationPrincipal CustomUserDetails user,
             @Valid @RequestBody NoticeCreateRq request
     ) {
         Long noticeId = communityService.createNotice(user.getId(), request);
