@@ -3,7 +3,7 @@ package com.startup.campusmate.domain.qna.controller;
 import com.startup.campusmate.domain.qna.dto.*;
 import com.startup.campusmate.domain.qna.service.QnaService;
 import com.startup.campusmate.global.rsData.RsData;
-import com.startup.campusmate.global.security.SecurityUser;
+import com.startup.campusmate.global.security.CustomUserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,7 +32,7 @@ public class QnaController {
 
     @GetMapping("/my")
     public RsData<QnaListRs> getMyQnaList(
-            @AuthenticationPrincipal SecurityUser user,
+            @AuthenticationPrincipal CustomUserDetails user,
             @RequestParam(required = false, defaultValue = "all") String status,
             @RequestParam(required = false, defaultValue = "1") int page,
             @RequestParam(required = false, defaultValue = "20") int limit
@@ -50,7 +50,7 @@ public class QnaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public RsData<QnaCreateRs> createQna(
-            @AuthenticationPrincipal SecurityUser user,
+            @AuthenticationPrincipal CustomUserDetails user,
             @Valid @RequestBody QnaCreateRq request
     ) {
         QnaCreateRs result = qnaService.createQna(user.getId(), request);
@@ -59,7 +59,7 @@ public class QnaController {
 
     @DeleteMapping("/{id}")
     public RsData<String> deleteQna(
-            @AuthenticationPrincipal SecurityUser user,
+            @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable Long id
     ) {
         qnaService.deleteQna(id, user.getId());
@@ -68,7 +68,7 @@ public class QnaController {
 
     @PostMapping("/{id}/answer")
     public RsData<String> addAnswer(
-            @AuthenticationPrincipal SecurityUser user,
+            @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable Long id,
             @Valid @RequestBody QnaAnswerRq request
     ) {
