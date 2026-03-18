@@ -19,8 +19,8 @@
 | 사진 | GitHub | 담당 기능 |
 | :---: | :--- | :--- |
 | ![kth4778](https://github.com/kth4778.png?size=100) | [kth4778](https://github.com/kth4778) | 공지사항 크롤링 및 API 명세서 작성 |
-| ![joon0890](https://github.com/joon0890.png?size=100) | [joon0890](https://github.com/joon0890) | 로그인, 입주자 상벌점, 알림 기능 |
+| ![joon0890](https://github.com/jwhitekim.png?size=100) | [joon0890](https://github.com/jwhitekim) | 로그인, 입주자 상벌점, 알림 기능 |
 
 ## 📸 화면별 이미지
 
-![2.jpg](2.jpg)
+![page.jpg](page.jpg)
